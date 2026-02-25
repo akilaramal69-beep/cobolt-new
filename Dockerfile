@@ -1,5 +1,11 @@
 FROM ghcr.io/imputnet/cobalt:latest
 
+# Install git (required for fetching edge version of youtubei.js from GitHub)
+# Use root to install system packages, then switch back to node if needed
+# (Assuming Debian-based image which is common for cobalt)
+USER root
+RUN apt-get update && apt-get install -y git || apk add --no-cache git
+
 # Force update youtubei.js to fix signature decipher error
 # We use the EDGE version directly from GitHub as it often has the latest decipher fixes
 RUN mkdir -p /tmp/patch && cd /tmp/patch && npm init -y && \

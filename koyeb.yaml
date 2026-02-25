@@ -12,6 +12,6 @@ services:
       - key: API_PORT
         value: "9000"
       - key: YOUTUBE_POT
-        value: "Mnpsd3V2LxNr32fQYIp83f33T3XZs:CgszbVp0d3ZaUUJEiBzyoM3uysAbU-NSIvlA"
+        value: "MnjO-io973Ojo87G90nspX-Zi8B1FExLoBhuZYMXvJsDrEMViAc9dawaciJtNCh8PLl5YiesnxTWCWoBZEAnzpmNBV5X0KRvoYUKrkpkR6EI283SixKqnV240jzUr_MqZw12SMXSXm3h8cLxNr32fQYIp83f33T3XZs=:CgszbVp0d3ZaUUJESSiilvvMBjIKCgJMSxIEGgAgFw%3D%3D"
     regions:
       - fra # Frankfurt, or change to 'was' (Washington) or others based on preference

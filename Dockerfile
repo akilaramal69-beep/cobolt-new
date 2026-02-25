@@ -1,18 +1,12 @@
-FROM ghcr.io/imputnet/cobalt:11
+FROM ghcr.io/imputnet/cobalt:latest
 
 # Force update youtubei.js to fix signature decipher error
-# We install in a separate directory to avoid "workspace:" protocol errors from the monorepo
-RUN mkdir -p /tmp/patch && cd /tmp/patch && npm init -y && npm install youtubei.js@latest --no-save
+# We use the EDGE version directly from GitHub as it often has the latest decipher fixes
+RUN mkdir -p /tmp/patch && cd /tmp/patch && npm init -y && \
+    npm install github:LuanRT/YouTube.js#main --no-save
 
-# Inject the updated library into the Cobalt app
-# We use a wildcard search to find the correct node_modules location
-RUN YJS_TARGET=$(find /home/node/app -name youtubei.js -type d | head -n 1) && \
-    if [ -n "$YJS_TARGET" ]; then \
-    echo "Patching youtubei.js at $YJS_TARGET"; \
-    cp -rf /tmp/patch/node_modules/youtubei.js/. "$YJS_TARGET/"; \
-    else \
-    echo "Warning: youtubei.js not found in /home/node/app"; \
-    fi
+# Inject the updated library into EVERY node_modules/youtubei.js directory found
+RUN find /home/node/app -name youtubei.js -type d -exec echo "Patching: {}" \; -exec cp -rf /tmp/patch/node_modules/youtubei.js/. {}/ \;
 
 # Koyeb automatically sets the PORT environment variable.
 ENV API_PORT=9000

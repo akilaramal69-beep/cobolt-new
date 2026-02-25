@@ -38,8 +38,29 @@ First, you need to push these files to a new GitHub repository:
 If you use the Koyeb CLI, you can deploy using the provided `koyeb.yaml` file.
 Be sure to edit `koyeb.yaml` to set your exact `API_URL` value before applying it.
 
+## YouTube Download Fix
+
+If you encounter issues downloading YouTube videos (like "HTML file" returns or signature decipher errors), you must configure **Cookies** and a **PO Token**.
+
+### 1. Cookies Configuration
+1. Export your YouTube cookies using a browser extension (like "EditThisCookie" or "Get cookies.txt LOCALLY") in Netscape or JSON format.
+2. The `cookies.json` file in this repo is already configured for Cobalt v11.
+3. Replace the placeholder values in `cookies.json` with your actual session values.
+
+### 2. PO Token (Signature Fix)
+YouTube now requires a "Proof of Origin" token to decipher video signatures.
+1. I have generated a token for you in `koyeb.yaml`.
+2. Ensure the `YOUTUBE_POT` environment variable is set to:
+   `Mnpsd3V2LxNr32fQYIp83f33T3XZs:CgszbVp0d3ZaUUJEiBzyoM3uysAbU-NSIvlA`
+
+### 3. Koyeb Environment Variables
+Ensure these variables are set in your Koyeb service:
+- `API_URL`: Your public app URL (e.g., `https://arrogant...koyeb.app/`)
+- `COOKIE_PATH`: `/cookies.json`
+- `YOUTUBE_POT`: (The combined token:visitorData string)
+
 ## Updating
-Since this uses the official `ghcr.io/imputnet/cobalt:11` Docker image, restarting or redeploying your service on Koyeb will pull the latest minor updates for version 11.
+Since this uses the official `ghcr.io/imputnet/cobalt:11` Docker image, restarting or redeploying your service on Koyeb will pull the latest minor updates for version 11. **Always "Redeploy with Clear Cache" when troubleshooting.**
 
 ---
 *For more advanced configurations (like setting API keys, rate limits, or cookies), see the [official Cobalt documentation](https://github.com/imputnet/cobalt/blob/main/docs/api-env-variables.md) and add those variables in the Koyeb Environment Variables section.*

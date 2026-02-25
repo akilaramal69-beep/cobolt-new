@@ -11,5 +11,7 @@ services:
         value: "https://arrogant-karrah-akila-4c42ca1e.koyeb.app/"
       - key: API_PORT
         value: "9000"
+      - key: YOUTUBE_POT
+        value: "Mnpsd3V2LxNr32fQYIp83f33T3XZs:CgszbVp0d3ZaUUJEiBzyoM3uysAbU-NSIvlA"
     regions:
       - fra # Frankfurt, or change to 'was' (Washington) or others based on preference

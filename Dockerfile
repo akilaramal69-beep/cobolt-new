@@ -7,12 +7,9 @@ USER root
 RUN apt-get update && apt-get install -y git || apk add --no-cache git
 
 # Force update youtubei.js to fix signature decipher error
-# We use the EDGE version directly from GitHub as it often has the latest decipher fixes
-RUN mkdir -p /tmp/patch && cd /tmp/patch && npm init -y && \
-    npm install github:LuanRT/YouTube.js#main --no-save
-
-# Inject the updated library into EVERY node_modules/youtubei.js directory found
-RUN find /app -name youtubei.js -type d -exec echo "Patching: {}" \; -exec cp -rf /tmp/patch/node_modules/youtubei.js/. {}/ \;
+# The isolated /app directory allows us to cleanly install the edge version and its dependencies (like meriyah)
+WORKDIR /app
+RUN npm install -g pnpm && pnpm add github:LuanRT/YouTube.js#main
 
 # Koyeb automatically sets the PORT environment variable.
 ENV API_PORT=9000

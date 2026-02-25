@@ -7,9 +7,18 @@ USER root
 RUN apt-get update && apt-get install -y git || apk add --no-cache git
 
 # Force update youtubei.js to fix signature decipher error
-# The isolated /app directory allows us to cleanly install the edge version and its dependencies (like meriyah)
+# Use a temporary directory to install the edge version and its new dependencies (like meriyah)
+# This completely bypasses the PNPM workspace errors
+WORKDIR /tmp/patch
+# We need to install undici explicitly because youtubei.js edge might rely on newest peer deps
+RUN npm init -y && npm install github:LuanRT/YouTube.js#main undici meriyah --no-save
+
+# Copy the completely updated modules directly into the Cobalt app's node_modules
+# The /app directory is the root of the production build in the new image
+RUN cp -rf /tmp/patch/node_modules/youtubei.js /app/node_modules/ && \
+    cp -rf /tmp/patch/node_modules/meriyah /app/node_modules/ 2>/dev/null || true
+
 WORKDIR /app
-RUN npm install -g pnpm && pnpm add github:LuanRT/YouTube.js#main
 
 # Koyeb automatically sets the PORT environment variable.
 ENV API_PORT=9000

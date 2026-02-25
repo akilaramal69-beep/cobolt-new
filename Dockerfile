@@ -12,7 +12,7 @@ RUN mkdir -p /tmp/patch && cd /tmp/patch && npm init -y && \
     npm install github:LuanRT/YouTube.js#main --no-save
 
 # Inject the updated library into EVERY node_modules/youtubei.js directory found
-RUN find /home/node/app -name youtubei.js -type d -exec echo "Patching: {}" \; -exec cp -rf /tmp/patch/node_modules/youtubei.js/. {}/ \;
+RUN find /app -name youtubei.js -type d -exec echo "Patching: {}" \; -exec cp -rf /tmp/patch/node_modules/youtubei.js/. {}/ \;
 
 # Koyeb automatically sets the PORT environment variable.
 ENV API_PORT=9000

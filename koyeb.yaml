@@ -1,0 +1,17 @@
+services:
+  - name: cobalt-api
+    docker:
+      image: registry.koyeb.com/user/cobalt-image-name # Or use 'ghcr.io/imputnet/cobalt:11' if deploying directly without building
+      dockerfile: Dockerfile
+    ports:
+      - port: 9000
+        protocol: http
+    env:
+      - key: API_URL
+        # REPLACE THIS WITH YOUR ACTUAL KOYEB DOMAIN
+        # e.g., https://my-cobalt-api.koyeb.app/
+        value: "https://<your-koyeb-app-name>.koyeb.app/"
+      - key: API_PORT
+        value: "9000"
+    regions:
+      - fra # Frankfurt, or change to 'was' (Washington) or others based on preference

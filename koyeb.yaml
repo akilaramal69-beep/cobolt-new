@@ -8,9 +8,7 @@ services:
         protocol: http
     env:
       - key: API_URL
-        # REPLACE THIS WITH YOUR ACTUAL KOYEB DOMAIN
-        # e.g., https://my-cobalt-api.koyeb.app/
-        value: "https://<your-koyeb-app-name>.koyeb.app/"
+        value: "https://arrogant-karrah-akila-4c42ca1e.koyeb.app/"
       - key: API_PORT
         value: "9000"
     regions:
